@@ -192,6 +192,7 @@ function getNum(coursenum){
 }
 
 
+
 function times2str(times){
   // convert a course.times object into a list of strings
   // e.g ["Lecture:Mon,Wed 10:00-10:50","Recitation: Thu 5:00-6:30"]
@@ -242,6 +243,7 @@ app.get('/upsertDB',
       const num = getNum(coursenum);
       course.num=num
       course.suffix = coursenum.slice(num.length)
+      course.strTimes = times2str(course.times)
       await Course.findOneAndUpdate({subject,coursenum,section,term},course,{upsert:true})
     }
     const num = await Course.find({}).count();
@@ -257,7 +259,7 @@ app.post('/courses/bySubject',
     const courses = await Course.find({subject:subject,independent_study:false}).sort({term:1,num:1,section:1})
     
     res.locals.courses = courses
-    res.locals.times2str = times2str
+    //res.locals.times2str = times2str
     //res.json(courses)
     res.render('courselist')
   }
@@ -269,7 +271,7 @@ app.get('/courses/show/:courseId',
     const {courseId} = req.params;
     const course = await Course.findOne({_id:courseId})
     res.locals.course = course
-    res.locals.times2str = times2str
+    //res.locals.times2str = times2str
     //res.json(course)
     res.render('course')
   }
@@ -296,7 +298,7 @@ app.post('/courses/byInst',
                .sort({term:1,num:1,section:1})
     //res.json(courses)
     res.locals.courses = courses
-    res.locals.times2str = times2str
+    //res.locals.times2str = times2str
     res.render('courselist')
   }
 )
@@ -375,7 +377,7 @@ app.use(function(err, req, res, next) {
 //  Starting up the server!
 // *********************************************************** //
 //Here we set the port to use between 1024 and 65535  (2^16-1)
-const port = "5000";
+const port = "50005";
 app.set("port", port);
 
 // and now we startup the server listening on that port
