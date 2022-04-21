@@ -303,6 +303,15 @@ app.post('/courses/byInst',
     res.render('courselist')
   }
 )
+app.get('/courses/byName',
+//show a list of all courses search by a certain keyword
+async(req,res,next)=>{
+  const name=req.params.name;
+  const courses =await Course.find({instructor:name,independent_study:false})
+  res.locals.courses=courses
+    res.render('courselist')
+}
+)
 
 app.post('/courses/byName',
 // show courses by searching random keywords
