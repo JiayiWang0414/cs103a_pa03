@@ -21,6 +21,7 @@ var courseSchema = Schema( {
     num: Number,
     suffix: String,
     name: String,
+    strTimes: [String],
     independent_study: Boolean,
     term: Number,
     description: String,
