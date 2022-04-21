@@ -319,7 +319,7 @@ app.post('/courses/byName',
     const name=req.body.name;
     const courses =
     await Course
-               .find({name:name,independent_study:false})
+               .find({name:new RegExp(name, 'i'),independent_study:false})
                .sort({term:1,num:1,section:1})
     res.locals.courses=courses
     res.render('courselist')
