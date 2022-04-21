@@ -312,6 +312,8 @@ app.post('/courses/byName',
     await Course
                .find({name:name,independent_study:false})
                .sort({term:1,num:1,section:1})
+    res.locals.courses=courses
+    res.render('courselist')
   }
 
 )
