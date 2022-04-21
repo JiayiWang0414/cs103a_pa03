@@ -265,6 +265,7 @@ app.post('/courses/bySubject',
   }
 )
 
+
 app.get('/courses/show/:courseId',
   // show all info about a course given its courseid
   async (req,res,next) => {
@@ -301,6 +302,18 @@ app.post('/courses/byInst',
     //res.locals.times2str = times2str
     res.render('courselist')
   }
+)
+
+app.post('/courses/byName',
+// show courses by searching random keywords
+  async (req,res,next) =>{
+    const name=req.body.name;
+    const courses =
+    await Course
+               .find({name:name,independent_study:false})
+               .sort({term:1,num:1,section:1})
+  }
+
 )
 
 app.use(isLoggedIn)
